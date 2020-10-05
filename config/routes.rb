@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root :to => "home#index"
   get 'home/index'
-  get 'news/index'
   resources :users, only: [:new, :create] do
     member do
       get :activate

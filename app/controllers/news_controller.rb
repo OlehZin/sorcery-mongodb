@@ -1,5 +1,5 @@
 class NewsController < ApplicationController
-  before_action :require_login, except: [:new, :create]
+  before_action :require_login
 
   def index
   end
