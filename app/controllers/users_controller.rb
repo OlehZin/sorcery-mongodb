@@ -8,7 +8,7 @@ skip_before_action :require_login, only: [:new, :create]
     @user = User.new(user_params)
     if @user.save
       login(params[:user][:email], params[:user][:password])
-      redirect_to news_index_path, notice: "Signed up!"
+      redirect_to articles_path, notice: "Signed up!"
     else
       render :new
     end

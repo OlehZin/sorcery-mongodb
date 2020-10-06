@@ -1,0 +1,5 @@
+<h1> Create new Article </h1>
+  <%= simple_form_for @article, url: new_article_path(@article), method: :post do |f| %>
+    <%= render partial: "form", locals: {f: f}%>
+    <%= f.submit "Save", class: "btn btn-primary" %>
+  <% end %>

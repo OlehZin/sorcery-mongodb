@@ -1,0 +1,24 @@
+<h1>News</h1>
+ <p><%= link_to "Add News ", new_article_path, class: "btn btn-info" %></p>
+<thead>
+<% if @articles.empty? %>
+<b>No News in the site!</b>
+<% else %>
+<table class="table table-striped">
+    <tr>
+      <th scope="col">ID:</th>
+      <th scope="col">Title:</th>
+      <th scope="col">Delete:</th>
+    </tr>
+  </thead>
+<% end %>
+<% @articles.each do |article| %>
+  <tbody>
+    <tr>
+      <td><%= user_id.id %></td>
+      <td><%= link_to article.title, news_path(news) %></td>
+      <td><%= link_to "Delete", articles_path(article), method: :delete,
+        data: {confirm: "Are you sure?"} %></td>
+    </tr>
+    </tbody>
+<% end %>

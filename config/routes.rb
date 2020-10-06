@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root :to => "home#index"
-  get 'home/index'
+  resources :articles
+  post '/articles/new', to: 'articles#create', as: :articles_new
   resources :users, only: [:new, :create] do
     member do
       get :activate
@@ -11,8 +12,5 @@ Rails.application.routes.draw do
   get "login" => "sessions#new",  :as => "login"
   get "signup" => "users#new",    :as => "signup"
   resources :reset_passwords, only: [:new, :create, :update, :edit]
-  resources :news, only: [:index]
-
-
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

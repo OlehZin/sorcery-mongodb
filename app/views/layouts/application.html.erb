@@ -6,6 +6,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
@@ -14,7 +15,7 @@
       <%= link_to "Home", root_path %>
       <% if current_user %>
         <h2> Logged in as <%= current_user.email %></h2>
-        <%= link_to "News", '/news/index' %>
+        <%= link_to "News", articles_path %>
       <% else %>
         <%= link_to "Sign up", signup_path %>
         <%= link_to "Log in", login_path %>

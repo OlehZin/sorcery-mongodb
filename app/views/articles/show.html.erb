@@ -1,0 +1,17 @@
+<thead>
+  <table class="table table-bordered table-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Title</th>
+    </tr>
+</thead>
+
+<tbody>
+    <tr>
+      <td><%= @user_id.id %></td>
+      <td><%= @article.title %></td>
+    </tr>
+  </table>
+</tbody>
+
+<p><%= link_to "Edit News", edit_articles_path, class: "btn btn-info" %></p>

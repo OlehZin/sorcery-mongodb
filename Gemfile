@@ -6,7 +6,7 @@ gem 'mongoid', '~> 7.1', '>= 7.1.2'
 gem 'sorcery'
 gem 'validates_email_format_of'
 gem 'delayed_job_mongoid'
-
+gem 'simple_form'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server

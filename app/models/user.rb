@@ -2,7 +2,8 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   authenticates_with_sorcery!
-  
+  has_many :articles, dependent: :destroy
+
   field :email,                           type: String
   field :password,                        type: String
   field :crypted_password,                type: String
