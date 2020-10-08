@@ -7,6 +7,8 @@ gem 'sorcery'
 gem 'validates_email_format_of'
 gem 'delayed_job_mongoid'
 gem 'simple_form'
+gem 'pry'
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server
@@ -42,8 +44,14 @@ group :development do
 end
 
 group :test do
+  gem 'rspec-rails', '~> 3.8'
+  gem 'mongoid-rspec'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner-mongo'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'rails-controller-testing'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'

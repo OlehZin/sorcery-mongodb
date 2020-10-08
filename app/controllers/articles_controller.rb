@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
 
   # /news/1 GET
   def show
-    resource
+    @article = resource
     unless @article
       render plain: "Page not found", status: 404
     end
@@ -20,37 +20,35 @@ class ArticlesController < ApplicationController
 
   # /news/1/edit GET
   def edit
-    resource
+    @article = resource
   end
 
   # /news POST
   def create
-    @article = Article.create(article_params)
-    if @article.errors.empty?
-      flash[:success] = "Created!"
-      redirect_to articles_path
+    @article = current_user.articles.new(article_params)
+    if @article.save
+      redirect_to articles_path, id: @article.id, notice: "Created!"
     else
-      flash.now[:error] = "Incorrect!"
+      flash[:error] = "Incorrect!"
       render "new"
     end
   end
 
   # /news/1 PUT
   def update
-    resource
-    @article.update_attributes(article_params)
-      if @article.errors.empty?
-        flash[:success] = "Updated!"
-        redirect_to action: "show"
-      else
-        flash.now[:error] = "Incorrect!"
-        render "edit"
-      end
+    @article =  resource
+    if @article.update(article_params)
+      flash[:success] = "Updated!"
+      redirect_to action: "show"
+    else
+      flash.now[:error] = "Incorrect!!"
+      render "edit"
+    end
   end
 
   # /news/1 DELETE
   def destroy
-    resource
+    @article = resource
     @article.destroy
     flash[:success] = "Deleted!"
     redirect_to action: "index"
@@ -63,7 +61,7 @@ class ArticlesController < ApplicationController
   end
 
   def resource
-    @article = Article.find(params[:id])
+    Article.find(params[:id])
   end
 
 end
