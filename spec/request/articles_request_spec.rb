@@ -1,14 +1,13 @@
 require 'rails_helper'
-
+#
 RSpec.describe "Articles", type: :request do
-  let!(:user) { FactoryBot.create(:user) }
-  #let!(:article) { Article.create(title: "News", body: "Some text")}
-  let!(:article) { FactoryBot.create(:article, user: user) }
+  let!(:user) { create(:user) }
+  let!(:article) { create(:article, user: user) }
 
   before(:each) do
       @user = create(:user)
       login_user
-    end
+  end
 
   it "get index" do
     get articles_path
@@ -17,7 +16,7 @@ RSpec.describe "Articles", type: :request do
 
   it "get show" do
     get article_path(article)
-  expect(response).to be_successful
+    expect(response).to be_successful
   end
 
   describe "#create" do
@@ -38,7 +37,7 @@ RSpec.describe "Articles", type: :request do
     end
   end
 
-  describe "#create" do
+  describe "#update" do
     it "updates an article" do
       get edit_article_path(article)
       expect(response).to render_template(:edit)
@@ -58,7 +57,9 @@ RSpec.describe "Articles", type: :request do
 
   it "deletes an article" do
     get articles_path
-    delete article_path(article)
+    expect {
+        delete article_path(article)
+      }.to change{Article.count}.by(-1)
     expect(response).to redirect_to action: "index"
     follow_redirect!
     expect(response).to render_template(:index)

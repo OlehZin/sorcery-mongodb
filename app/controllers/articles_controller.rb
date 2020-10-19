@@ -36,10 +36,9 @@ class ArticlesController < ApplicationController
 
   # /news/1 PUT
   def update
-    @article =  resource
+    @article = resource
     if @article.update(article_params)
-      flash[:success] = "Updated!"
-      redirect_to action: "show"
+      redirect_to article_path, notice: "Updated!"
     else
       flash.now[:error] = "Incorrect!!"
       render "edit"
@@ -50,8 +49,7 @@ class ArticlesController < ApplicationController
   def destroy
     @article = resource
     @article.destroy
-    flash[:success] = "Deleted!"
-    redirect_to action: "index"
+    redirect_to articles_path, notice: "Deleted!"
   end
 
   private

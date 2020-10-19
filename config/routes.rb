@@ -9,8 +9,16 @@ Rails.application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   delete '/log_out', to: 'sessions#destroy', as: :log_out
-  get "login" => "sessions#new",  :as => "login"
-  get "signup" => "users#new",    :as => "signup"
+  get "login" => "sessions#new",  as: "login"
+  get "signup" => "users#new",    as: "signup"
   resources :reset_passwords, only: [:new, :create, :update, :edit]
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  #API:
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :articles, only: [:index, :show]
+      resources :users, only: [:index, :show, :create]
+      post 'authenticate', to: 'sessions#authenticate'
+    end
+  end
 end

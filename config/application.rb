@@ -24,7 +24,7 @@ module TestApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.active_job.queue_adapter = :delayed_job
-
+    config.autoload_paths << Rails.root.join('lib')
     config.generators do |g|
       g.test_framework :rspec,
       fixtures: false,

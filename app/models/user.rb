@@ -2,7 +2,8 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   authenticates_with_sorcery!
-  has_many :articles, dependent: :destroy
+
+  field :admin,                           type: Boolean
 
   field :email,                           type: String
   field :password,                        type: String
@@ -24,6 +25,8 @@ class User
     { unique: true})
   field :reset_password_token_expires_at, type: DateTime
   field :reset_password_email_sent_at,    type: DateTime
+
+  has_many :articles, dependent: :destroy
 
   validates_confirmation_of :password
   validates_presence_of     :password, :on => :create, length: { minimum: 4 }
