@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       get :activate
     end
   end
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [:create, :destroy]
   delete '/log_out', to: 'sessions#destroy', as: :log_out
   get "login" => "sessions#new",  as: "login"
   get "signup" => "users#new",    as: "signup"

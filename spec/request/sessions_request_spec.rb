@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Users_sessions", type: :request do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, email: 'bios111@gmail.com', password: '12345678',
+      password_confirmation: '12345678') }
 
   describe "log_in" do
     it "get log_in" do
@@ -10,13 +11,13 @@ RSpec.describe "Users_sessions", type: :request do
     end
 
     it "log_in user" do
-      post users_path params: {user: {email: 'bios111@gmail.com', password: '12345678'}}
+      post sessions_path, params: {user: {email: user.email, password: "12345678"}}
       expect(response).to redirect_to articles_path
     end
 
     it "invalid log_in" do
-      post users_path params: {user: {email: '', password: ''}}
-      expect(response).to render_template 'new'
+      post sessions_path params: {user: {email: '', password: ''}}
+      expect(response).to redirect_to login_path
     end
   end
 

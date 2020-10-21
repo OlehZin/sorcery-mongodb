@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       redirect_back_or_to articles_path
     else
       flash.now[:warning] = 'E-mail and/or password is incorrect.'
-      redirect_to new_session_path
+      redirect_to login_path
     end
   end
 

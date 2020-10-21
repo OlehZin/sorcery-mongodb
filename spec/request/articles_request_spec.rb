@@ -1,12 +1,10 @@
 require 'rails_helper'
-#
 RSpec.describe "Articles", type: :request do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, email: 'bios111@gmail.com', password: '12345678', password_confirmation: '12345678') }
   let!(:article) { create(:article, user: user) }
 
   before(:each) do
-      @user = create(:user)
-      login_user
+    login_user("bios111@gmail.com", "12345678")
   end
 
   it "get index" do
@@ -20,27 +18,31 @@ RSpec.describe "Articles", type: :request do
   end
 
   describe "#create" do
-    it "creates an article" do
+    it "new article" do
       get new_article_path
       expect(response).to render_template(:new)
-      post articles_path(@article), params: { article: {title: "Latest news", body: "Today...tralala"} }
+    end
+
+    it "creates an article" do
+      post articles_path, params: { article: {title: "Latest news", body: "Today...tralala"} }
       expect(response).to redirect_to articles_path
       follow_redirect!
       expect(response).to render_template(:index)
     end
 
     it "doesn't creates an article" do
-      get new_article_path
-      expect(response).to render_template(:new)
       post articles_path, params: { article: {title: "", body: ""} }
       expect(response).to render_template(:new)
     end
   end
 
   describe "#update" do
-    it "updates an article" do
+    it "edit article" do
       get edit_article_path(article)
       expect(response).to render_template(:edit)
+    end
+
+    it "updates an article" do
       put article_path(article), params: { article: {title: "Latest news", body: "some text"}}
       expect(response).to redirect_to action: "show"
       follow_redirect!
@@ -56,7 +58,6 @@ RSpec.describe "Articles", type: :request do
   end
 
   it "deletes an article" do
-    get articles_path
     expect {
         delete article_path(article)
       }.to change{Article.count}.by(-1)
