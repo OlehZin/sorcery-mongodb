@@ -1,5 +1,5 @@
 class ApiController < ActionController::API
-
+  include Sorcery::Controller
   before_action :authenticate_request
   attr_reader :current_user
   #Виклик AuthorizeApiRequest надходить з модуля SimpleCommand, де він
@@ -10,4 +10,6 @@ class ApiController < ActionController::API
     render json: { errors: [{ code: 401, message: 'Not Authorized' }] },
       status: 401 unless @current_user
   end
+
+  def form_authenticity_token; end
 end
