@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 gem 'mongoid', '~> 7.1', '>= 7.1.2'
+gem 'kaminari-mongoid'
 gem 'sorcery'
 gem 'validates_email_format_of'
 gem 'delayed_job_mongoid'
@@ -13,6 +14,7 @@ gem 'bcrypt'
 gem 'rack-cors'
 gem 'jwt'
 gem 'simple_command'
+gem 'rails_admin'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server

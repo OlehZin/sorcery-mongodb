@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe "Articles", type: :request do
   let!(:user) { create(:user, email: 'bios111@gmail.com', password: '12345678', password_confirmation: '12345678') }
-  let!(:article) { create(:article, user: user) }
+  let!(:article) { create(:article, :published, user: user) }
 
   before(:each) do
     login_user("bios111@gmail.com", "12345678")

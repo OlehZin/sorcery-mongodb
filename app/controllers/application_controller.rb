@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   def not_authenticated
     flash[:warning] = 'First log in, please)'
-    redirect_to '/login'
+    redirect_to main_app.login_path
+    #redirect_to '/login'
   end
 end
