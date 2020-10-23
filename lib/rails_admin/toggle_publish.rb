@@ -22,7 +22,7 @@ module RailsAdmin
 
         register_instance_option :controller do
           Proc.new do
-            @object.update(toggle_publish: !@object.toggle_publish?)
+            @object.update(published: !@object.published?)
             redirect_to back_or_index
           end
         end
