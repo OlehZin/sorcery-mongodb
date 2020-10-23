@@ -1,13 +1,13 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Article.all
+    @articles = Article.published
   end
 
   # /news/1 GET
   def show
     @article = resource
     unless @article
-      render plain: "Page not found", status: 404
+      redirect_to root_path
     end
   end
 
@@ -57,7 +57,6 @@ class ArticlesController < ApplicationController
   end
 
   def resource
-    Article.find(params[:id])
+    Article.published.find(params[:id])
   end
-
 end

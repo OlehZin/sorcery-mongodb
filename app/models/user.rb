@@ -32,5 +32,4 @@ class User
   validates_presence_of     :password, :on => :create, length: { minimum: 4 }
   validates :email, uniqueness: true, email_format: { message: 'has invalid format' }
   # I used validate gem for email validation!
-
 end
