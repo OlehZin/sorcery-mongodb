@@ -114,7 +114,7 @@ paths:
       tags:
       - Users
       parameters:
-      - name: articles
+      - name: users
         in: path
         required: true
         schema:
@@ -155,7 +155,7 @@ paths:
     post:
       summary: Creates a user
       tags:
-      - User
+      - Users
       parameters: []
       responses:
         '201':

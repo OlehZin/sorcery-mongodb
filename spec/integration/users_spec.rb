@@ -6,7 +6,7 @@ describe 'Users API' do
     get 'Index' do
       tags 'Users'
       produces 'application/json', 'application/xml'
-      parameter name: :articles, in: :path, type: :string
+      parameter name: :users, in: :path, type: :string
 
       response '200', 'users found' do
         schema type: :object,
@@ -18,11 +18,13 @@ describe 'Users API' do
           required: [ 'email', 'password']
 
         let(:user) { create(:user) }
+        let(:user_token) { JsonWebToken.encode(user_id: user.id) }
+        let(:headers) { {'Authentication': user_token} }
         run_test!
       end
 
       response '406', 'unsupported accept header' do
-        let(:headers) { {'Authentication': user_token} }
+        let(:headers) { 'application/foo' }
         run_test!
       end
     end
@@ -53,7 +55,7 @@ describe 'Users API' do
       end
 
       response '406', 'unsupported accept header' do
-        let(:headers) { {'Authentication': user_token} }
+        let(:headers) { 'application/foo' }
         run_test!
       end
     end
@@ -61,7 +63,7 @@ describe 'Users API' do
 
   path '/api/v1/users' do
     post 'Creates a user' do
-      tags 'User'
+      tags 'Users'
       consumes 'application/json'
       parameter name: :user, in: :body, schema: {
         type: :object,
@@ -83,7 +85,7 @@ describe 'Users API' do
       end
 
       response '406', 'unsupported accept header' do
-        let(:headers) { {'Authentication': user_token} }
+        let(:headers) { 'application/foo' }
         run_test!
       end
     end

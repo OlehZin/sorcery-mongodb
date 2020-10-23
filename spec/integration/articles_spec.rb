@@ -2,32 +2,6 @@ require 'swagger_helper'
 
 describe 'Articles API' do
 
-  # path '/api/v1/articles' do
-  #
-  #   post 'Creates an article' do
-  #     tags 'Article'
-  #     consumes 'application/json'
-  #     parameter name: :article, in: :body, schema: {
-  #       type: :object,
-  #       properties: {
-  #         title: { type: :string },
-  #         body: { type: :string },
-  #         published: {type: :boolean}
-  #       },
-  #       required: [ 'title', 'body' ]
-  #     }
-  #
-  #     response '201', 'article created' do
-  #       let(:article) { { title: 'foo', body: 'bar', published: true } }
-  #       run_test!
-  #     end
-  #
-  #     response '422', 'invalid request' do
-  #       let(:article) { { title: 'foo' } }
-  #       run_test!
-  #     end
-  #   end
-  # end
   path '/api/v1/articles' do
     get 'Index' do
       tags 'Articles'
@@ -53,7 +27,7 @@ describe 'Articles API' do
       end
 
       response '406', 'unsupported accept header' do
-        let(:headers) { {'Authentication': user_token} }
+        let(:'Accept') { 'application/foo' }
         run_test!
       end
     end
@@ -85,7 +59,7 @@ describe 'Articles API' do
       end
 
       response '406', 'unsupported accept header' do
-        let(:headers) { {'Authentication': user_token} }
+        let(:'Accept') { 'application/foo' }
         run_test!
       end
     end
