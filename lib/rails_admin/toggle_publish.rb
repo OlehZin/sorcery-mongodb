@@ -6,7 +6,7 @@ end
 module RailsAdmin
   module Config
     module Actions
-      class PublishedArticle < RailsAdmin::Config::Actions::Base
+      class TogglePublish < RailsAdmin::Config::Actions::Base
         RailsAdmin::Config::Actions.register(self)
 
         register_instance_option :member do
@@ -22,7 +22,7 @@ module RailsAdmin
 
         register_instance_option :controller do
           Proc.new do
-            @object.update(published: !@object.published?)
+            @object.update(toggle_publish: !@object.toggle_publish?)
             redirect_to back_or_index
           end
         end

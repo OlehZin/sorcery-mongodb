@@ -1,5 +1,5 @@
-require Rails.root.join("lib", "rails_admin", "published_article")
-RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::PublishedArticle)
+require Rails.root.join("lib", "rails_admin", "toggle_publish")
+RailsAdmin::Config::Actions.register(RailsAdmin::Config::Actions::TogglePublish)
 
 RailsAdmin.config do |config|
 config.main_app_name = ["test_app"]
@@ -20,7 +20,7 @@ config.actions do
   edit
   delete
   show_in_app
-  published_article do
+  toggle_publish do
     only 'Article'
   end
 end
