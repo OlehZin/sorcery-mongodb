@@ -1,0 +1,236 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/articles":
+    get:
+      summary: Index
+      tags:
+      - Articles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: articles found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  published:
+                    type: boolean
+                required:
+                - title
+                - body
+                - published
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  published:
+                    type: boolean
+                required:
+                - title
+                - body
+                - published
+        '404':
+          description: articles not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+  "/api/v1/articles/{id}":
+    get:
+      summary: Show
+      tags:
+      - Articles
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: article found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  published:
+                    type: boolean
+                required:
+                - id
+                - title
+                - body
+                - published
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  body:
+                    type: string
+                  published:
+                    type: boolean
+                required:
+                - id
+                - title
+                - body
+                - published
+        '404':
+          description: article not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+  "/api/v1/users":
+    get:
+      summary: Index
+      tags:
+      - Users
+      parameters:
+      - name: articles
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: users found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                required:
+                - email
+                - password
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                required:
+                - email
+                - password
+        '406':
+          description: unsupported accept header
+          content: {}
+    post:
+      summary: Creates a user
+      tags:
+      - User
+      parameters: []
+      responses:
+        '201':
+          description: user created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/api/v1/users/{id}":
+    get:
+      summary: Show
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: user found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                required:
+                - id
+                - email
+                - password
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                  password:
+                    type: string
+                required:
+                - id
+                - email
+                - password
+        '404':
+          description: user not found
+          content: {}
+        '406':
+          description: unsupported accept header
+          content: {}
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

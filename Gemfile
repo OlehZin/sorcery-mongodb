@@ -15,6 +15,7 @@ gem 'rack-cors'
 gem 'jwt'
 gem 'simple_command'
 gem 'rails_admin'
+gem 'rswag'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server
