@@ -10,6 +10,21 @@ config.authenticate_with do
   end
 config.current_user_method(&:current_user)
 
+config.actions do
+  dashboard
+  index
+  new
+  export
+  bulk_delete
+  show
+  edit
+  delete
+  show_in_app
+  published_article do
+    only 'Article'
+  end
+end
+
 config.model User do
   list do
     field :id
@@ -26,21 +41,6 @@ config.model Article do
     field :user_email
     field :updated_at
     field :created_at
-    end
-  end
-
-  config.actions do
-    dashboard
-    index
-    new
-    export
-    bulk_delete
-    show
-    edit
-    delete
-    show_in_app
-    published_article do
-      only 'Article'
     end
   end
 end

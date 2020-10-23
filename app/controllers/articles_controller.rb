@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   def show
     @article = resource
     unless @article
-      redirect_to :root
+      redirect_to root_path
     end
   end
 
