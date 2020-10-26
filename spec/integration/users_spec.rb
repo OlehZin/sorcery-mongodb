@@ -4,26 +4,22 @@ describe 'Users API' do
 
   path '/api/v1/users' do
     get 'Index' do
-      tags 'Users'
-      produces 'application/json', 'application/xml'
-      parameter name: :users, in: :path, type: :string
+      tags :Users
+      produces 'application/json'
+      # security [JWT: {}]
+      # parameter name: 'Authentication', in: :headers, type: :string
 
-      response '200', 'users found' do
-        schema type: :object,
-          properties: {
-            id: { type: :string },
-            email: { type: :string },
-            password: { type: :string },
-          },
-          required: [ 'email', 'password']
-
-        let(:user) { create(:user) }
-        let(:user_token) { JsonWebToken.encode(user_id: user.id) }
-        let(:headers) { {'Authentication': user_token} }
-        run_test!
+      response(200, description: 'Return all the available users') do
+        let!(:user) { create(:user) }
+        # let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
+        # let!(:'Authentication') { "Bearer #{user_token}" }
+        run_test! do |repsonse|
+          body = JSON.parse(response.body)
+          puts body
+        end
       end
 
-      response '406', 'unsupported accept header' do
+      response(401, description: 'Not Authorized') do
         let(:headers) { 'application/foo' }
         run_test!
       end
@@ -31,12 +27,11 @@ describe 'Users API' do
   end
 
   path '/api/v1/users/{id}' do
-    get 'Show' do
-      tags 'Users'
-      produces 'application/json', 'application/xml'
-      parameter name: :id, in: :path, type: :string
-
-      response '200', 'user found' do
+  get 'Show' do
+    tags :Users
+    produces 'application/json'
+    parameter name: :id, in: :path, type: :string
+      response(200, description: 'Return the selected user') do
         schema type: :object,
         properties: {
           id: { type: :string },
@@ -44,17 +39,16 @@ describe 'Users API' do
           password: { type: :string },
         },
         required: [ 'id', 'email', 'password']
-
-        let(:id) { User.create(email: 'bios111@gmail.com', password: '12345678').id }
+      let(:id) { User.create(email: 'bios111@gmail.com', password: '12345678').id }
         run_test!
       end
 
-      response '404', 'user not found' do
+      response(404, description: 'user not found') do
         let(:id) { 'invalid' }
         run_test!
       end
 
-      response '406', 'unsupported accept header' do
+      response(401, description: 'Not Authorized') do
         let(:headers) { 'application/foo' }
         run_test!
       end
@@ -62,8 +56,8 @@ describe 'Users API' do
   end
 
   path '/api/v1/users' do
-    post 'Creates a user' do
-      tags 'Users'
+    post 'Create' do
+      tags :Users
       consumes 'application/json'
       parameter name: :user, in: :body, schema: {
         type: :object,
@@ -74,17 +68,17 @@ describe 'Users API' do
         required: [ 'email', 'password' ]
       }
 
-      response '201', 'user created' do
+      response(201, description: 'user created') do
         let(:user) { { email: 'bios111@gmail.com', password: '12345678'} }
         run_test!
       end
 
-      response '422', 'invalid request' do
+      response(422, description: 'invalid request') do
         let(:user) { { email: 'bios111@gmail.com' } }
         run_test!
       end
 
-      response '406', 'unsupported accept header' do
+      response(401, description: 'Not Authorized') do
         let(:headers) { 'application/foo' }
         run_test!
       end

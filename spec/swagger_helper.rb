@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+#require 'rspec/rails/swagger'
 require 'rails_helper'
 
 RSpec.configure do |config|
@@ -7,7 +7,7 @@ RSpec.configure do |config|
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.join('swagger').to_s
-
+  config.swagger_dry_run = false
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
   # be generated at the provided relative path under swagger_root
@@ -24,16 +24,35 @@ RSpec.configure do |config|
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://localhost:3000',
           variables: {
             defaultHost: {
-              default: 'www.example.com'
+              default: 'localhost:3000'
             }
           }
         }
       ]
     }
   }
+
+  # config.swagger_docs = {
+  #   'api/v1/swagger.json' => {
+  #     swagger: '2.0',
+  #     info: {
+  #       title: 'API V1',
+  #       version: 'v1'
+  #     },
+  #     paths: {},
+  #     securityDefinitions: {
+  #       JWT: {
+  #         description: 'the jwt for API auth',
+  #         type: :apiKey,
+  #         name: 'Authentication',
+  #         in: :header
+  #       }
+  #     }
+  #   }
+  # }
 
   # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
   # The swagger_docs configuration option has the filename including format in

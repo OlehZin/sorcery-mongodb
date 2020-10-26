@@ -1,5 +1,5 @@
 ---
-openapi: 3.0.1
+swagger: '2.0'
 info:
   title: API V1
   version: v1
@@ -9,141 +9,140 @@ paths:
       summary: Index
       tags:
       - Articles
+      produces:
+      - application/json
       responses:
         '200':
           description:
             description: Return all the available articles
-          content: {}
         '401':
           description:
             description: Not Authorized
-          content: {}
   "/api/v1/articles/{id}":
     get:
       summary: Show
       tags:
       - Articles
+      produces:
+      - application/json
       parameters:
       - name: id
         in: path
+        type: string
         required: true
-        schema:
-          type: string
       responses:
         '200':
           description:
             description: article found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  title:
-                    type: string
-                  body:
-                    type: string
-                  published:
-                    type: boolean
-                required:
-                - id
-                - title
-                - body
-                - published
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              title:
+                type: string
+              body:
+                type: string
+              published:
+                type: boolean
+            required:
+            - id
+            - title
+            - body
+            - published
         '404':
           description:
             description: article not found
-          content: {}
         '401':
           description:
             description: Not Authorized
-          content: {}
   "/api/v1/users":
     get:
       summary: Index
       tags:
       - Users
+      produces:
+      - application/json
+      security:
+      - JWT: {}
+      parameters:
+      - name: Authentication
+        in: headers
+        type: string
       responses:
         '200':
           description:
             description: Return all the available users
-          content: {}
         '401':
           description:
             description: Not Authorized
-          content: {}
     post:
       summary: Create
       tags:
       - Users
-      parameters: []
+      consumes:
+      - application/json
+      parameters:
+      - name: user
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+          required:
+          - email
+          - password
       responses:
         '201':
           description:
             description: user created
-          content: {}
         '422':
           description:
             description: invalid request
-          content: {}
         '401':
           description:
             description: Not Authorized
-          content: {}
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                password:
-                  type: string
-              required:
-              - email
-              - password
   "/api/v1/users/{id}":
     get:
       summary: Show
       tags:
       - Users
+      produces:
+      - application/json
       parameters:
       - name: id
         in: path
+        type: string
         required: true
-        schema:
-          type: string
       responses:
         '200':
           description:
             description: Return the selected user
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  email:
-                    type: string
-                  password:
-                    type: string
-                required:
-                - id
-                - email
-                - password
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+            required:
+            - id
+            - email
+            - password
         '404':
           description:
             description: user not found
-          content: {}
         '401':
           description:
             description: Not Authorized
-          content: {}
-servers:
-- url: http://localhost:3000
-  variables:
-    defaultHost:
-      default: localhost:3000
+securityDefinitions:
+  JWT:
+    description: the jwt for API auth
+    type: apiKey
+    name: Authentication
+    in: header

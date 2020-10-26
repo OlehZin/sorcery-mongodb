@@ -10,6 +10,5 @@ class ApiController < ActionController::API
     render json: { errors: [{ code: 401, message: 'Not Authorized' }] },
       status: 401 unless @current_user
   end
-
   def form_authenticity_token; end
 end
