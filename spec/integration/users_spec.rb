@@ -6,13 +6,13 @@ describe 'Users API' do
     get 'Index' do
       tags :Users
       produces 'application/json'
-      # security [JWT: {}]
-      # parameter name: 'Authentication', in: :headers, type: :string
+      security [JWT: {}]
+      # parameter name: :Authentication, in: :headers, type: :string
 
       response(200, description: 'Return all the available users') do
         let!(:user) { create(:user) }
         # let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
-        # let!(:'Authentication') { "Bearer #{user_token}" }
+        # let!(:Authentication) { "Bearer #{user_token}" }
         run_test! do |repsonse|
           body = JSON.parse(response.body)
           puts body
@@ -20,7 +20,7 @@ describe 'Users API' do
       end
 
       response(401, description: 'Not Authorized') do
-        let(:headers) { 'application/foo' }
+        let!(:Authentication) { 'application/foo' }
         run_test!
       end
     end
@@ -49,7 +49,7 @@ describe 'Users API' do
       end
 
       response(401, description: 'Not Authorized') do
-        let(:headers) { 'application/foo' }
+        let!(:Authentication) { 'application/foo' }
         run_test!
       end
     end
@@ -79,7 +79,7 @@ describe 'Users API' do
       end
 
       response(401, description: 'Not Authorized') do
-        let(:headers) { 'application/foo' }
+        let!(:Authentication) { 'application/foo' }
         run_test!
       end
     end

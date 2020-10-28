@@ -64,6 +64,8 @@ paths:
       summary: Index
       tags:
       - Users
+      security:
+      - JWT: {}
       responses:
         '200':
           description:
