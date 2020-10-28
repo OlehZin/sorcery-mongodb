@@ -14,10 +14,6 @@ paths:
           description:
             description: Return all the available articles
           content: {}
-        '401':
-          description:
-            description: Not Authorized
-          content: {}
   "/api/v1/articles/{id}":
     get:
       summary: Show
@@ -55,10 +51,6 @@ paths:
           description:
             description: article not found
           content: {}
-        '401':
-          description:
-            description: Not Authorized
-          content: {}
   "/api/v1/users":
     get:
       summary: Index
@@ -70,10 +62,6 @@ paths:
         '200':
           description:
             description: Return all the available users
-          content: {}
-        '401':
-          description:
-            description: Not Authorized
           content: {}
     post:
       summary: Create
@@ -88,10 +76,6 @@ paths:
         '422':
           description:
             description: invalid request
-          content: {}
-        '401':
-          description:
-            description: Not Authorized
           content: {}
       requestBody:
         content:
@@ -139,10 +123,6 @@ paths:
         '404':
           description:
             description: user not found
-          content: {}
-        '401':
-          description:
-            description: Not Authorized
           content: {}
 servers:
 - url: http://localhost:3000

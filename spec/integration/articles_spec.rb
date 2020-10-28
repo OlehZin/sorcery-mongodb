@@ -18,10 +18,10 @@ describe 'Articles API' do
         run_test!
       end
 
-      response(401, description: 'Not Authorized') do
-        let(:headers) { 'application/foo' }
-        run_test!
-      end
+      # response(401, description: 'Not Authorized') do
+      #   let(:headers) { 'application/foo' }
+      #   run_test!
+      # end
     end
   end
 
@@ -53,10 +53,10 @@ describe 'Articles API' do
         run_test!
       end
 
-      response(401, description: 'Not Authorized') do
-        let(:headers) { 'application/foo' }
-        run_test!
-      end
+      # response(401, description: 'Not Authorized') do
+      #   let(:headers) { 'application/foo' }
+      #   run_test!
+      # end
     end
   end
 end

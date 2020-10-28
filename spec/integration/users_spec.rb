@@ -19,10 +19,10 @@ describe 'Users API' do
         end
       end
 
-      response(401, description: 'Not Authorized') do
-        let!(:Authentication) { 'application/foo' }
-        run_test!
-      end
+      # response(401, description: 'Not Authorized') do
+      #   let!(:Authentication) { 'application/foo' }
+      #   run_test!
+      # end
     end
   end
 
@@ -48,10 +48,10 @@ describe 'Users API' do
         run_test!
       end
 
-      response(401, description: 'Not Authorized') do
-        let!(:Authentication) { 'application/foo' }
-        run_test!
-      end
+      # response(401, description: 'Not Authorized') do
+      #   let!(:Authentication) { 'application/foo' }
+      #   run_test!
+      # end
     end
   end
 
@@ -78,10 +78,10 @@ describe 'Users API' do
         run_test!
       end
 
-      response(401, description: 'Not Authorized') do
-        let!(:Authentication) { 'application/foo' }
-        run_test!
-      end
+      # response(401, description: 'Not Authorized') do
+      #   let!(:Authentication) { 'application/foo' }
+      #   run_test!
+      # end
     end
   end
 end
