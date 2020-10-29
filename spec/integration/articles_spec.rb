@@ -8,6 +8,14 @@ describe 'Articles API' do
       produces 'application/json'
 
       response(200, description: 'Return all the available articles') do
+        schema type: :array,
+          items: {
+          type: :object,
+          properties: {
+          id:     { type: :string },
+          title:  { type: :string },
+          body:   { type: :string }
+        }}
         it 'Return 10 articles' do
           body = JSON(response.body)
           expect(body.count).to eq(10)
@@ -36,10 +44,9 @@ describe 'Articles API' do
           properties: {
             id: { type: :string },
             title: { type: :string },
-            body: { type: :string },
-            published: {type: :boolean}
+            body: { type: :string }
           },
-          required: [ 'id', 'title', 'body', 'published' ]
+          required: [ 'id', 'title', 'body']
         let!(:user) { create(:user, email: 'bios111@gmail.com', password: '12345678',
             password_confirmation: '12345678') }
         let(:id) { Article.create(title: 'foo', body: 'bar', published: true).id }

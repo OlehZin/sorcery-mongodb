@@ -6,13 +6,18 @@ describe 'Users API' do
     get 'Index' do
       tags :Users
       produces 'application/json'
-      security [JWT: {}]
-      # parameter name: :Authentication, in: :headers, type: :string
-
+      security [ basic_auth: [] ]
       response(200, description: 'Return all the available users') do
-        let!(:user) { create(:user) }
-        # let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
-        # let!(:Authentication) { "Bearer #{user_token}" }
+        schema type: :array,
+          items: {
+          type: :object,
+          properties: {
+          id: { type: :string },
+          email: { type: :string }
+        }}
+      let!(:user) { create(:user) }
+      #let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
+      #let!(:Authentication) { "Basic #{::Base64.strict_encode64(user_id: user.id)}" }
         run_test! do |repsonse|
           body = JSON.parse(response.body)
           puts body
@@ -35,10 +40,9 @@ describe 'Users API' do
         schema type: :object,
         properties: {
           id: { type: :string },
-          email: { type: :string },
-          password: { type: :string },
+          email: { type: :string }
         },
-        required: [ 'id', 'email', 'password']
+        required: [ 'id', 'email']
       let(:id) { User.create(email: 'bios111@gmail.com', password: '12345678').id }
         run_test!
       end
@@ -69,11 +73,23 @@ describe 'Users API' do
       }
 
       response(201, description: 'user created') do
+        produces 'application/json'
+        schema type: :object,
+          properties: {
+            id: { type: :string },
+            email: { type: :string },
+          }
         let(:user) { { email: 'bios111@gmail.com', password: '12345678'} }
         run_test!
       end
 
       response(422, description: 'invalid request') do
+        produces 'application/json'
+        schema type: :object,
+          properties: {
+            id: { type: :string },
+            email: { type: :string },
+          }
         let(:user) { { email: 'bios111@gmail.com' } }
         run_test!
       end

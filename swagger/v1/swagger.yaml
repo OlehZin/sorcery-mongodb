@@ -13,7 +13,19 @@ paths:
         '200':
           description:
             description: Return all the available articles
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    title:
+                      type: string
+                    body:
+                      type: string
   "/api/v1/articles/{id}":
     get:
       summary: Show
@@ -40,13 +52,10 @@ paths:
                     type: string
                   body:
                     type: string
-                  published:
-                    type: boolean
                 required:
                 - id
                 - title
                 - body
-                - published
         '404':
           description:
             description: article not found
@@ -57,12 +66,22 @@ paths:
       tags:
       - Users
       security:
-      - JWT: {}
+      - basic_auth: []
       responses:
         '200':
           description:
             description: Return all the available users
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    email:
+                      type: string
     post:
       summary: Create
       tags:
@@ -72,11 +91,27 @@ paths:
         '201':
           description:
             description: user created
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
         '422':
           description:
             description: invalid request
-          content: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
       requestBody:
         content:
           application/json:
@@ -114,16 +149,19 @@ paths:
                     type: string
                   email:
                     type: string
-                  password:
-                    type: string
                 required:
                 - id
                 - email
-                - password
         '404':
           description:
             description: user not found
           content: {}
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: query
 servers:
 - url: http://localhost:3000
   variables:

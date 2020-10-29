@@ -22,14 +22,22 @@ RSpec.configure do |config|
         version: 'v1'
       },
       paths: {},
-      # securityDefinitions: {
-      #   JWT: {
-      #     description: 'the jwt for API auth',
-      #     type: :apiKey,
-      #     name: 'Authentication',
-      #     in: :headers
+
+      # components: {
+      #   securitySchemes: {
+      #     basic_auth: {
+      #       type: :http,
+      #       scheme: :basic
+      #     },
+      #     api_key: {
+      #       type: :apiKey,
+      #       name: 'api_key',
+      #       in: :query
+      #     }
       #   }
       # },
+
+
       servers: [
         {
           url: 'http://localhost:3000',
@@ -44,4 +52,5 @@ RSpec.configure do |config|
   }
 
   config.swagger_format = :yaml
+
 end
