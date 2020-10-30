@@ -3,7 +3,7 @@ class Api::V1::SessionsController < ApiController
 
  def authenticate
    if @user = login(user_params[:email], user_params[:password])
-     render json: { token: JsonWebToken.encode(user: @user.id) }
+     render json: { token: JsonWebToken.encode(user_id: @user.id) }
    else
      render json: {error: "Invalid email or password"}
    end

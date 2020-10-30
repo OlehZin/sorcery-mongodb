@@ -6,6 +6,7 @@ describe 'Articles API' do
     get 'Index' do
       tags :Articles
       produces 'application/json'
+      parameter name: 'Authentication', in: :header, type: :string
 
       response(200, description: 'Return all the available articles') do
         schema type: :array,
@@ -26,10 +27,22 @@ describe 'Articles API' do
         run_test!
       end
 
-      # response(401, description: 'Not Authorized') do
-      #   let(:headers) { 'application/foo' }
-      #   run_test!
-      # end
+      response(401, description: 'Error: Unauthorized') do
+        schema type: :object,
+        properties: {
+          errors: {
+            type: :array,
+            items: {
+              properties: {
+                code: { type: :integer, example: 401 },
+                message: { type: :string, example: "Not Authorized" },
+              }
+            },
+          },
+        }
+      let(:Authentication) { '' }
+        run_test!
+      end
     end
   end
 
@@ -37,6 +50,7 @@ describe 'Articles API' do
     get 'Show' do
       tags :Articles
       produces 'application/json'
+      parameter name: 'Authentication', in: :header, type: :string
       parameter name: :id, in: :path, type: :string
 
       response(200, description: 'article found') do
@@ -44,9 +58,10 @@ describe 'Articles API' do
           properties: {
             id: { type: :string },
             title: { type: :string },
-            body: { type: :string }
+            body: { type: :string },
+            published: { type: :boolean }
           },
-          required: [ 'id', 'title', 'body']
+          required: [ 'id', 'title', 'body', 'published']
         let!(:user) { create(:user, email: 'bios111@gmail.com', password: '12345678',
             password_confirmation: '12345678') }
         let(:id) { Article.create(title: 'foo', body: 'bar', published: true).id }
@@ -60,10 +75,22 @@ describe 'Articles API' do
         run_test!
       end
 
-      # response(401, description: 'Not Authorized') do
-      #   let(:headers) { 'application/foo' }
-      #   run_test!
-      # end
+      response(401, description: 'Error: Unauthorized') do
+        schema type: :object,
+        properties: {
+          errors: {
+            type: :array,
+            items: {
+              properties: {
+                code: { type: :integer, example: 401 },
+                message: { type: :string, example: "Not Authorized" },
+              }
+            },
+          },
+        }
+      let(:Authentication) { '' }
+        run_test!
+      end
     end
   end
 end

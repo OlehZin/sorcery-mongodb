@@ -9,6 +9,11 @@ paths:
       summary: Index
       tags:
       - Articles
+      parameters:
+      - name: Authentication
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description:
@@ -26,12 +31,34 @@ paths:
                       type: string
                     body:
                       type: string
+        '401':
+          description:
+            description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      properties:
+                        code:
+                          type: integer
+                          example: 401
+                        message:
+                          type: string
+                          example: Not Authorized
   "/api/v1/articles/{id}":
     get:
       summary: Show
       tags:
       - Articles
       parameters:
+      - name: Authentication
+        in: header
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -52,21 +79,96 @@ paths:
                     type: string
                   body:
                     type: string
+                  published:
+                    type: boolean
                 required:
                 - id
                 - title
                 - body
+                - published
         '404':
           description:
             description: article not found
           content: {}
+        '401':
+          description:
+            description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      properties:
+                        code:
+                          type: integer
+                          example: 401
+                        message:
+                          type: string
+                          example: Not Authorized
+  "/api/v1/authenticate":
+    post:
+      summary: Authenticate
+      tags:
+      - Sessions
+      parameters: []
+      responses:
+        '201':
+          description:
+            description: user logged
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  email:
+                    type: string
+                required:
+                - email
+                - password
+        '401':
+          description:
+            description: authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid email or password
+                required:
+                - error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                  required:
+                  - email
+                  - password
   "/api/v1/users":
     get:
       summary: Index
       tags:
       - Users
-      security:
-      - basic_auth: []
+      parameters:
+      - name: Authentication
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description:
@@ -82,11 +184,33 @@ paths:
                       type: string
                     email:
                       type: string
+        '401':
+          description:
+            description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      properties:
+                        code:
+                          type: integer
+                          example: 401
+                        message:
+                          type: string
+                          example: Not Authorized
     post:
       summary: Create
       tags:
       - Users
-      parameters: []
+      parameters:
+      - name: Authentication
+        in: header
+        schema:
+          type: string
       responses:
         '201':
           description:
@@ -108,10 +232,29 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
+                  error:
                     type: string
-                  email:
-                    type: string
+                    example: Invalid email or password
+                required:
+                - error
+        '401':
+          description:
+            description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      properties:
+                        code:
+                          type: integer
+                          example: 401
+                        message:
+                          type: string
+                          example: Not Authorized
       requestBody:
         content:
           application/json:
@@ -131,6 +274,10 @@ paths:
       tags:
       - Users
       parameters:
+      - name: Authentication
+        in: header
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -155,13 +302,32 @@ paths:
         '404':
           description:
             description: user not found
-          content: {}
-components:
-  securitySchemes:
-    api_key:
-      type: apiKey
-      name: api_key
-      in: query
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Page not found
+        '401':
+          description:
+            description: 'Error: Unauthorized'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      properties:
+                        code:
+                          type: integer
+                          example: 401
+                        message:
+                          type: string
+                          example: Not Authorized
 servers:
 - url: http://localhost:3000
   variables:

@@ -22,22 +22,6 @@ RSpec.configure do |config|
         version: 'v1'
       },
       paths: {},
-
-      # components: {
-      #   securitySchemes: {
-      #     basic_auth: {
-      #       type: :http,
-      #       scheme: :basic
-      #     },
-      #     api_key: {
-      #       type: :apiKey,
-      #       name: 'api_key',
-      #       in: :query
-      #     }
-      #   }
-      # },
-
-
       servers: [
         {
           url: 'http://localhost:3000',

@@ -6,7 +6,8 @@ describe 'Users API' do
     get 'Index' do
       tags :Users
       produces 'application/json'
-      security [ basic_auth: [] ]
+      parameter name: 'Authentication', in: :header, type: :string
+
       response(200, description: 'Return all the available users') do
         schema type: :array,
           items: {
@@ -16,18 +17,28 @@ describe 'Users API' do
           email: { type: :string }
         }}
       let!(:user) { create(:user) }
-      #let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
-      #let!(:Authentication) { "Basic #{::Base64.strict_encode64(user_id: user.id)}" }
-        run_test! do |repsonse|
-          body = JSON.parse(response.body)
-          puts body
-        end
+      let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
+      let!(:headers) { {'Authentication': user_token} }
+      let(:Authentication) { headers }
+      run_test!
       end
 
-      # response(401, description: 'Not Authorized') do
-      #   let!(:Authentication) { 'application/foo' }
-      #   run_test!
-      # end
+      response(401, description: 'Error: Unauthorized') do
+        schema type: :object,
+        properties: {
+          errors: {
+            type: :array,
+            items: {
+              properties: {
+                code: { type: :integer, example: 401 },
+                message: { type: :string, example: "Not Authorized" },
+              }
+            },
+          },
+        }
+      let(:Authentication) { '' }
+        run_test!
+      end
     end
   end
 
@@ -35,6 +46,7 @@ describe 'Users API' do
   get 'Show' do
     tags :Users
     produces 'application/json'
+    parameter name: 'Authentication', in: :header, type: :string
     parameter name: :id, in: :path, type: :string
       response(200, description: 'Return the selected user') do
         schema type: :object,
@@ -44,18 +56,37 @@ describe 'Users API' do
         },
         required: [ 'id', 'email']
       let(:id) { User.create(email: 'bios111@gmail.com', password: '12345678').id }
-        run_test!
+      let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
+      let!(:headers) { {'Authentication': user_token} }
+      let(:Authentication) { headers }
+      run_test!
       end
 
       response(404, description: 'user not found') do
-        let(:id) { 'invalid' }
+        schema type: :object,
+        properties: {
+          error: {type: :string, example: "Page not found"}
+        }
+      let(:id) { 'invalid' }
         run_test!
       end
 
-      # response(401, description: 'Not Authorized') do
-      #   let!(:Authentication) { 'application/foo' }
-      #   run_test!
-      # end
+      response(401, description: 'Error: Unauthorized') do
+        schema type: :object,
+        properties: {
+          errors: {
+            type: :array,
+            items: {
+              properties: {
+                code: { type: :integer, example: 401 },
+                message: { type: :string, example: "Not Authorized" },
+              }
+            },
+          },
+        }
+      let(:Authentication) { '' }
+        run_test!
+      end
     end
   end
 
@@ -63,6 +94,7 @@ describe 'Users API' do
     post 'Create' do
       tags :Users
       consumes 'application/json'
+      parameter name: 'Authentication', in: :header, type: :string
       parameter name: :user, in: :body, schema: {
         type: :object,
         properties: {
@@ -79,7 +111,10 @@ describe 'Users API' do
             id: { type: :string },
             email: { type: :string },
           }
-        let(:user) { { email: 'bios111@gmail.com', password: '12345678'} }
+        let!(:user) { create(:user) }
+        let!(:user_token) { JsonWebToken.encode(user_id: user.id) }
+        let!(:headers) { {'Authentication': user_token} }
+        let(:Authentication) { headers }
         run_test!
       end
 
@@ -87,17 +122,29 @@ describe 'Users API' do
         produces 'application/json'
         schema type: :object,
           properties: {
-            id: { type: :string },
-            email: { type: :string },
-          }
-        let(:user) { { email: 'bios111@gmail.com' } }
+            error: { type: :string, example: "Invalid email or password"},
+          },
+          required: ['error']
+      let(:user) { { email: 'string', password: 'string' } }
         run_test!
       end
 
-      # response(401, description: 'Not Authorized') do
-      #   let!(:Authentication) { 'application/foo' }
-      #   run_test!
-      # end
+      response(401, description: 'Error: Unauthorized') do
+        schema type: :object,
+        properties: {
+          errors: {
+            type: :array,
+            items: {
+              properties: {
+                code: { type: :integer, example: 401 },
+                message: { type: :string, example: "Not Authorized" },
+              }
+            },
+          },
+        }
+      let(:Authentication) { '' }
+        run_test!
+      end
     end
   end
 end
