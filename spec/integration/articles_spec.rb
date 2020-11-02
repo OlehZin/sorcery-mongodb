@@ -15,7 +15,8 @@ describe 'Articles API' do
           properties: {
           id:     { type: :string },
           title:  { type: :string },
-          body:   { type: :string }
+          body:   { type: :string },
+          published: { type: :boolean }
         }}
         it 'Return 10 articles' do
           body = JSON(response.body)
@@ -64,14 +65,14 @@ describe 'Articles API' do
           required: [ 'id', 'title', 'body', 'published']
         let!(:user) { create(:user, email: 'bios111@gmail.com', password: '12345678',
             password_confirmation: '12345678') }
-        let(:id) { Article.create(title: 'foo', body: 'bar', published: true).id }
+        let!(:id) { create(:article, title: 'foo', body: 'bar', published: true).id}
         run_test!
       end
 
       response(404, description: 'article not found') do
         let!(:user) { create(:user, email: 'bios111@gmail.com', password: '12345678',
             password_confirmation: '12345678') }
-        let(:id) { Article.create(title: '', body: '', published: true).id }
+        let(:id) { 'invalid' }
         run_test!
       end
 

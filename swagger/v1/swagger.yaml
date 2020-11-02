@@ -31,6 +31,8 @@ paths:
                       type: string
                     body:
                       type: string
+                    published:
+                      type: boolean
         '401':
           description:
             description: 'Error: Unauthorized'
