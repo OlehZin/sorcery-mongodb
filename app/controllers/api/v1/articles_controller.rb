@@ -7,7 +7,7 @@ class Api::V1::ArticlesController <  ApiController
   def show
     @article = resource
     unless @article
-      redirect_to root_path
+      render plain: "Page not found", status: 404
     end
   end
 

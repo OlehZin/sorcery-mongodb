@@ -57,7 +57,8 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.include FactoryBot::Syntax::Methods
   # Filter lines from Rails gems in backtraces.
-
+  config.backtrace_inclusion_patterns = [%r{app|spec}]
+  
   config.include Sorcery::TestHelpers::Rails::Integration
   config.include Sorcery::TestHelpers::Rails::Controller
   config.include Sorcery::TestHelpers::Rails::Request, type: :request

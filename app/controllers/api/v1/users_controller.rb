@@ -6,6 +6,9 @@ class Api::V1::UsersController <  ApiController
 
   def show
     @user = resource
+    unless @user
+      render plain: "Page not found", status: 404
+    end
   end
 
   def create
