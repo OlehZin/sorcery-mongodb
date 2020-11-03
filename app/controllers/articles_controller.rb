@@ -53,7 +53,7 @@ class ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :body)
+    params.require(:article).permit(:title, :body, :title_image, :remove_title_image)
   end
 
   def resource
