@@ -10,7 +10,7 @@
 <tbody>
     <tr>
       <td><%= @article.title %></td>
-      <td> <%= image_tag(@article.title_image_url.to_s, class: 'img-fluid') %></td>
+      <td> <%= image_tag(@article.title_image_url, class: 'img-fluid') if @article.title_image? %></td>
       <td><%= @article.body %></td>
     </tr>
   </table>

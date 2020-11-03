@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root :to => "home#index"
   resources :articles do
-  get :title_image, on: :member
+    get :title_image, on: :member
   end
   # match '/images/uploads/article/image/:id/:filename' => 'gridfs#image', via: :get
   # match '/images/uploads/article/image/:id/:filename' => 'gridfs#thumb_image',
