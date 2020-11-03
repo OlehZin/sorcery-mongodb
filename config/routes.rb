@@ -6,9 +6,6 @@ Rails.application.routes.draw do
   resources :articles do
     get :title_image, on: :member
   end
-  # match '/images/uploads/article/image/:id/:filename' => 'gridfs#image', via: :get
-  # match '/images/uploads/article/image/:id/:filename' => 'gridfs#thumb_image',
-  #     constraints: { filename: /thumb.*/ }, via: :get
   post '/articles/new', to: 'articles#create', as: :articles_new
   resources :users, only: [:new, :create] do
     member do
