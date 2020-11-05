@@ -14,7 +14,7 @@
 !/tmp/.keep
 
 
-/public/uploads/*
+
 /public/assets
 .byebug_history
 
