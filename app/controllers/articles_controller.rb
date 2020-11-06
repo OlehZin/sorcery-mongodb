@@ -25,9 +25,10 @@ class ArticlesController < ApplicationController
   def create
     @article = current_user.articles.new(article_params)
     if @article.save
-      redirect_to articles_path, id: @article.id, notice: "Created!"
+      flash[:success] = "Created!"
+      redirect_to articles_path, id: @article.id
     else
-      flash[:error] = "Incorrect!"
+      flash[:danger] = "Incorrect!"
       render "new"
     end
   end
@@ -36,9 +37,10 @@ class ArticlesController < ApplicationController
   def update
     @article = resource
     if @article.update(article_params)
-      redirect_to article_path, notice: "Updated!"
+      flash[:success] = "Updated!"
+      redirect_to article_path
     else
-      flash.now[:error] = "Incorrect!!"
+      flash[:danger] = "Incorrect!!"
       render "edit"
     end
   end
@@ -47,13 +49,14 @@ class ArticlesController < ApplicationController
   def destroy
     @article = resource
     @article.destroy
-    redirect_to articles_path, notice: "Deleted!"
+    flash[:success] = "Deleted!"
+    redirect_to articles_path
   end
 
   private
 
   def article_params
-    params.require(:article).permit(:title, :body)
+    params.require(:article).permit(:title, :body, :title_image, :remove_title_image)
   end
 
   def resource

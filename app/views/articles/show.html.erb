@@ -1,17 +1,14 @@
-<thead>
-  <table class="table table-bordered table-dark">
-    <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Body</th>
-    </tr>
-</thead>
-
-<tbody>
-    <tr>
-      <td><%= @article.title %></td>
-      <td><%= @article.body %></td>
-    </tr>
-  </table>
-</tbody>
-
-<p><%= link_to "Edit News", edit_article_path, class: "btn btn-info" %></p>
+<section class="post-content-section">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 post-title-block">
+      <h1 class="text-center"><%= @article.title %></h1>
+        <ul class="list-inline text-center">
+            <li><%= image_tag(@article.title_image_url, class: 'img-fluid') if @article.title_image? %></li>
+        </ul>
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-12">
+        <p class="lead"><%= @article.body %></p>
+    </div>
+  </div>
+  <p><%= link_to "Edit News", edit_article_path, class: "btn btn-info" %></p>
+</section>

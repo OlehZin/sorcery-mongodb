@@ -9,25 +9,12 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <div id="container">
-      <%= link_to "Home", root_path %>
-      <% if current_user %>
-        <h2> Logged in as <%= current_user.email %></h2>
-        <%= link_to "News", articles_path %>
-      <% else %>
-        <%= link_to "Sign up", signup_path %>
-        <%= link_to "Log in", login_path %>
-      <% end %>
-      <% if current_user %>
-        <%= link_to 'Log Out', log_out_path, method: :delete %>
-      <% end %>
+    <%= render partial: "shared/header" %>
+    <%= render partial: "shared/flash" %>
+    <div class="container mt-4">
+      <%= yield %>
     </div>
-
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-    <% end %>
-    <%= yield %>
+    <%= render partial: "shared/footer" %>
   </body>
 </html>
