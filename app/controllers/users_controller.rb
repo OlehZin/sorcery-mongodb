@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       flash[:success] = 'User was successfully activated.'
       redirect_to log_in_path
     else
-      flash[:warning] = 'Cannot activate this user.'
+      flash[:error] = 'Cannot activate this user.'
       redirect_to root_path
     end
   end

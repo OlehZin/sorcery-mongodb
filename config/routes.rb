@@ -7,11 +7,7 @@ Rails.application.routes.draw do
     get :title_image, on: :member
   end
   post '/articles/new', to: 'articles#create', as: :articles_new
-  resources :users, only: [:new, :create] do
-    member do
-      get :activate
-    end
-  end
+  resources :users, only: [:new, :create]
   resources :sessions, only: [:create, :destroy]
   delete '/log_out', to: 'sessions#destroy', as: :log_out
   get "login" => "sessions#new",  as: "login"
