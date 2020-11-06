@@ -1,8 +1,5 @@
 <% if flash.present? %>
   <% flash.each do |type, msg| %>
-  <% class_type = type == "error" ? "alert-danger" : "alert-success" %>
-    <div class=<%=class_type%>>
-      <%= msg %>
-    </div>
+    <div class="alert alert-<%= type %>"><%= msg %></div>
   <% end %>
 <% end %>

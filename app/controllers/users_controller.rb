@@ -9,7 +9,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       login(params[:user][:email], params[:user][:password])
-      redirect_to articles_path, notice: "Signed up!"
+      flash[:success] = "Signed up!"
+      redirect_to articles_path
     else
       render :new
     end
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
       flash[:success] = 'User was successfully activated.'
       redirect_to log_in_path
     else
-      flash[:error] = 'Cannot activate this user.'
+      flash[:danger] = 'Cannot activate this user.'
       redirect_to root_path
     end
   end

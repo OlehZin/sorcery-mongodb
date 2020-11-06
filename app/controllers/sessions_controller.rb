@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       flash[:success] = "Logged in!"
       redirect_back_or_to articles_path
     else
-      flash[:error] = 'E-mail and/or password is incorrect.'
+      flash[:danger] = 'E-mail and/or password is incorrect.'
       redirect_to login_path
     end
   end
