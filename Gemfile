@@ -21,6 +21,7 @@ gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'jquery-rails'
 gem 'file_validators'
 gem 'mini_magick'
+gem 'ckeditor'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.0'
 # Use Puma as the app server
@@ -70,6 +71,7 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
