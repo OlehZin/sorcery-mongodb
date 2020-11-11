@@ -29,7 +29,7 @@ class User
   has_many :articles, dependent: :destroy
 
   validates_confirmation_of :password
-  validates_presence_of     :password, :on => :create, length: { minimum: 4 }
+  validates_length_of :password, minimum: 4
   validates :email, uniqueness: true, email_format: { message: 'has invalid format' }
   # I used validate gem for email validation!
 end
