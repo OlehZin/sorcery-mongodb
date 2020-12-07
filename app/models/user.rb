@@ -28,8 +28,8 @@ class User
 
   has_many :articles, dependent: :destroy
 
-  validates_confirmation_of :password
-  validates_length_of :password, minimum: 4
+  validates :password, length: { minimum: 8, maximum: 16 }, if: -> { new_record? || changes[:crypted_password] }
+  validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :email, uniqueness: true, email_format: { message: 'has invalid format' }
   # I used validate gem for email validation!
 end
