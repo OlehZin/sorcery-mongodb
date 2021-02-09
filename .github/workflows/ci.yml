@@ -1,17 +1,22 @@
-name: CI Rspec
+name: CI
 on: [push, pull_request]
 jobs:
   test:
     runs_on: ubuntu-18.04
+    # services:
     services:
-      db: 
-        image: mongo
-        ports: ['27017:27017']
-        options: >-
-          --health-cmd mongo_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    mongodb:
+      image: mongo:3.4.23
+      ports:
+        - 27017:27017
+      # db: 
+      #   image: mongo
+      #   ports: ['27017:27017']
+      #   options: >-
+      #     --health-cmd mongo_isready
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
       redis:
         image: redis
         ports: ['6379:6379']
@@ -19,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Setup Ruby
-      - uses: actions/setup-ruby@v1
+        uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.6.x
       - uses: borales/actions-yarn@v2.0.0
