@@ -3,7 +3,6 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-18.04
-    # services:
     services:
       mongodb:
         image: mongo:3.4.23
