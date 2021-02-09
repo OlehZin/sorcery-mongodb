@@ -2,13 +2,13 @@ name: CI
 on: [push, pull_request]
 jobs:
   test:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-18.04
     # services:
     services:
-    mongodb:
-      image: mongo:3.4.23
-      ports:
-        - 27017:27017
+      mongodb:
+        image: mongo:3.4.23
+        ports:
+          - 27017:27017
       # db: 
       #   image: mongo
       #   ports: ['27017:27017']
