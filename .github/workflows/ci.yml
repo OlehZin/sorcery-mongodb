@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 jobs:
   test:
-    runs_on: ubuntu-18.04
+    runs_on: ubuntu-latest
     # services:
     services:
     mongodb:
